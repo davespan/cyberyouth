@@ -1,0 +1,664 @@
+[gd_scene load_steps=35 format=3 uid="uid://b0qbbo730dqce"]
+
+[ext_resource type="Script" path="res://scripts/game.gd" id="1_gno6y"]
+[ext_resource type="Texture2D" uid="uid://c775fy1g0hmxd" path="res://assets/graphics/shield.png" id="2_0ghqi"]
+[ext_resource type="PackedScene" uid="uid://dwkc5wmw8xdys" path="res://scenes/monster.tscn" id="2_t1pg5"]
+[ext_resource type="Shader" path="res://scripts/shaders/crt.gdshader" id="3_3lv7q"]
+[ext_resource type="Texture2D" uid="uid://e2fo6c2j1607" path="res://assets/graphics/computer_top.png" id="4_f2h3u"]
+[ext_resource type="Texture2D" uid="uid://bc2wvesp4cci5" path="res://assets/graphics/computer_bottom.png" id="5_1gejc"]
+[ext_resource type="Texture2D" uid="uid://577uj1exnpuf" path="res://assets/graphics/arm.png" id="5_k6no2"]
+[ext_resource type="Texture2D" uid="uid://rvekaobtx5j" path="res://assets/graphics/button_attack.png" id="7_fkcg0"]
+[ext_resource type="FontFile" uid="uid://c1onid02yugm0" path="res://assets/fonts/clacon2.ttf" id="8_j74qm"]
+[ext_resource type="Texture2D" uid="uid://d3pe1mbx2aa27" path="res://assets/graphics/button_center.png" id="8_wh0r7"]
+[ext_resource type="AudioStream" uid="uid://kytlqaoi3n65" path="res://assets/sounds/click.mp3" id="9_05ogg"]
+[ext_resource type="Texture2D" uid="uid://b436mifh260iv" path="res://assets/graphics/button_left.png" id="9_rqlvs"]
+[ext_resource type="AudioStream" uid="uid://cle732wjp42al" path="res://assets/sounds/cd_sound.ogg" id="10_mpicl"]
+[ext_resource type="AudioStream" uid="uid://b2wa11isrupj0" path="res://assets/sounds/alarm.wav" id="10_ugq7s"]
+[ext_resource type="AudioStream" uid="uid://ctj74hess3e0k" path="res://assets/sounds/dazed.wav" id="11_gdmah"]
+[ext_resource type="Texture2D" uid="uid://dfgrnm02gmst3" path="res://assets/graphics/logo.png" id="11_s4aqh"]
+[ext_resource type="AudioStream" uid="uid://30xhu1l31rtu" path="res://assets/sounds/load_response.wav" id="12_oxuin"]
+[ext_resource type="AudioStream" uid="uid://bv80smvmdvv3s" path="res://assets/sounds/attack.wav" id="13_ko1x0"]
+[ext_resource type="AudioStream" uid="uid://bds1wtq7djlsi" path="res://assets/sounds/DavidKBD - Code injection Pack - 06 - Electric Inferno-loop.ogg" id="14_hywa5"]
+[ext_resource type="AudioStream" uid="uid://bjbvu3lwy5rc2" path="res://assets/sounds/lost.wav" id="19_bkulf"]
+[ext_resource type="AudioStream" uid="uid://b7o7qbgkfq23o" path="res://assets/sounds/win.wav" id="20_4ol87"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gkpmj"]
+shader = ExtResource("3_3lv7q")
+shader_parameter/overlay = true
+shader_parameter/scanlines_opacity = 0.4
+shader_parameter/scanlines_width = 0.25
+shader_parameter/grille_opacity = 0.3
+shader_parameter/resolution = Vector2(1331.2, 998.4)
+shader_parameter/pixelate = false
+shader_parameter/roll = true
+shader_parameter/roll_speed = 3.0
+shader_parameter/roll_size = 30.0
+shader_parameter/roll_variation = 1.8
+shader_parameter/distort_intensity = 0.003
+shader_parameter/noise_opacity = 0.4
+shader_parameter/noise_speed = 5.0
+shader_parameter/static_noise_intensity = 0.08
+shader_parameter/aberration = 0.00100005
+shader_parameter/brightness = 1.4
+shader_parameter/discolor = false
+shader_parameter/warp_amount = 0.5
+shader_parameter/clip_warp = false
+shader_parameter/vignette_intensity = 0.4
+shader_parameter/vignette_opacity = 0.5
+
+[sub_resource type="Animation" id="Animation_yba0w"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Controls/Countdown/Label:text")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["3"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Controls/Countdown/Label:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Controls/Countdown/Overlay:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CDSound:playing")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("CDSound:pitch_scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [2.0]
+}
+
+[sub_resource type="Animation" id="Animation_hiktw"]
+resource_name = "countdown"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Controls/Countdown/Label:text")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": ["3", "2", "1"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Controls/Countdown/Label:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Controls/Countdown/Overlay:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CDSound:playing")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 1, 2, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [true, true, true, true]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("CDSound:pitch_scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 2.7, 3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [1.0, 1.0, 2.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6igha"]
+_data = {
+"RESET": SubResource("Animation_yba0w"),
+"countdown": SubResource("Animation_hiktw")
+}
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_okr2d"]
+content_margin_left = 24.0
+content_margin_top = 24.0
+content_margin_right = 24.0
+content_margin_bottom = 0.0
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ca17q"]
+content_margin_left = 24.0
+content_margin_top = 32.0
+content_margin_right = 24.0
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 8
+border_color = Color(0, 1, 0, 1)
+expand_margin_bottom = 5.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lx12g"]
+content_margin_left = 24.0
+content_margin_top = 24.0
+content_margin_right = 24.0
+bg_color = Color(0, 1, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rwkii"]
+bg_color = Color(1, 1, 1, 0)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0, 1, 0, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+corner_detail = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_htoay"]
+bg_color = Color(0, 1, 0, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0, 1, 0, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+corner_detail = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uq4gb"]
+bg_color = Color(0, 1, 0, 0)
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 8
+border_color = Color(0, 1, 0, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+corner_detail = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hl77r"]
+bg_color = Color(0, 1, 0, 1)
+border_color = Color(0, 1, 0, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_detail = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q1vcx"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_expkl"]
+bg_color = Color(0, 1, 0, 1)
+border_color = Color(0, 1, 0, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_detail = 1
+
+[node name="game" type="Node"]
+script = ExtResource("1_gno6y")
+
+[node name="Background" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(1920, 1080)
+offset_right = 40.0
+offset_bottom = 40.0
+color = Color(0.0313726, 0.0313726, 0.0313726, 1)
+metadata/_edit_lock_ = true
+
+[node name="Legend" type="Label" parent="."]
+offset_left = 64.0
+offset_top = 100.0
+offset_right = 352.0
+offset_bottom = 144.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("8_j74qm")
+theme_override_font_sizes/font_size = 45
+text = "ESC: Menu
+"
+
+[node name="Dazed" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
+[node name="ShieldSprite" type="Sprite2D" parent="."]
+position = Vector2(1680, 356)
+scale = Vector2(1.17969, 1.17969)
+texture = ExtResource("2_0ghqi")
+hframes = 11
+
+[node name="SystemIntegrityLabel" type="Label" parent="ShieldSprite"]
+offset_left = -159.364
+offset_top = -217.007
+offset_right = 160.636
+offset_bottom = -133.007
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("8_j74qm")
+theme_override_font_sizes/font_size = 45
+text = "KEY_SYS"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Monster" parent="." instance=ExtResource("2_t1pg5")]
+
+[node name="Screen" type="CanvasLayer" parent="."]
+
+[node name="Shader" type="ColorRect" parent="Screen"]
+material = SubResource("ShaderMaterial_gkpmj")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 560.0
+offset_top = 120.0
+offset_right = -560.0
+offset_bottom = -360.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0)
+metadata/_edit_lock_ = true
+
+[node name="Terminal" type="CanvasLayer" parent="."]
+
+[node name="TerminalTopSprite" type="Sprite2D" parent="Terminal"]
+position = Vector2(960, 540)
+texture = ExtResource("4_f2h3u")
+metadata/_edit_lock_ = true
+
+[node name="LeftButton" type="Sprite2D" parent="Terminal"]
+position = Vector2(689.5, 845)
+scale = Vector2(1, 1.01562)
+texture = ExtResource("9_rqlvs")
+
+[node name="Left" type="Button" parent="Terminal/LeftButton"]
+modulate = Color(1, 1, 1, 0)
+offset_left = -92.0
+offset_top = -80.0
+offset_right = 91.0
+offset_bottom = 82.0
+action_mode = 0
+metadata/_edit_lock_ = true
+
+[node name="RightButton" type="Sprite2D" parent="Terminal"]
+position = Vector2(1234, 845)
+scale = Vector2(1, 1.01562)
+texture = ExtResource("9_rqlvs")
+flip_h = true
+
+[node name="Right" type="Button" parent="Terminal/RightButton"]
+modulate = Color(1, 1, 1, 0)
+offset_left = -92.0
+offset_top = -80.0
+offset_right = 91.0
+offset_bottom = 82.0
+action_mode = 0
+metadata/_edit_lock_ = true
+
+[node name="EnterButton" type="Sprite2D" parent="Terminal"]
+position = Vector2(962, 845)
+scale = Vector2(1, 1.01562)
+texture = ExtResource("8_wh0r7")
+
+[node name="Enter" type="Button" parent="Terminal/EnterButton"]
+modulate = Color(1, 1, 1, 0)
+offset_left = -92.0
+offset_top = -80.0
+offset_right = 91.0
+offset_bottom = 82.0
+action_mode = 0
+metadata/_edit_lock_ = true
+
+[node name="AttackButton" type="Sprite2D" parent="Terminal"]
+position = Vector2(1626, 845)
+scale = Vector2(0.982654, 0.998008)
+texture = ExtResource("7_fkcg0")
+offset = Vector2(0, 6.38)
+
+[node name="Attack" type="Button" parent="Terminal/AttackButton"]
+modulate = Color(1, 1, 1, 0)
+offset_left = -165.0
+offset_top = -80.0
+offset_right = 165.0
+offset_bottom = 82.0
+action_mode = 0
+metadata/_edit_lock_ = true
+
+[node name="AttackButtonHidden" type="Sprite2D" parent="Terminal"]
+position = Vector2(285.75, 845)
+scale = Vector2(0.982654, 0.998008)
+offset = Vector2(0, 6.38)
+
+[node name="Attack" type="Button" parent="Terminal/AttackButtonHidden"]
+modulate = Color(1, 1, 1, 0)
+offset_left = -165.0
+offset_top = -80.0
+offset_right = 165.0
+offset_bottom = 82.0
+action_mode = 0
+metadata/_edit_lock_ = true
+
+[node name="TerminalBottomSprite" type="Sprite2D" parent="Terminal"]
+position = Vector2(960, 540)
+texture = ExtResource("5_1gejc")
+metadata/_edit_lock_ = true
+
+[node name="Logo" type="Sprite2D" parent="Terminal"]
+position = Vector2(1628, 681)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("11_s4aqh")
+
+[node name="Controls" type="CanvasLayer" parent="."]
+
+[node name="Arm" type="Sprite2D" parent="Controls"]
+z_index = 2
+position = Vector2(960, 960)
+scale = Vector2(1.7, 1.7)
+texture = ExtResource("5_k6no2")
+offset = Vector2(0, 140)
+
+[node name="Countdown" type="AnimationPlayer" parent="Controls"]
+root_node = NodePath("../..")
+libraries = {
+"": SubResource("AnimationLibrary_6igha")
+}
+
+[node name="Overlay" type="ColorRect" parent="Controls/Countdown"]
+z_index = 2
+custom_minimum_size = Vector2(1920, 1080)
+offset_right = 1920.0
+offset_bottom = 1080.0
+color = Color(0.0313726, 0.0313726, 0.0313726, 1)
+metadata/_edit_lock_ = true
+
+[node name="Label" type="Label" parent="Controls/Countdown"]
+z_index = 2
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("8_j74qm")
+theme_override_font_sizes/font_size = 600
+text = "3"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Popup" type="ColorRect" parent="Controls"]
+visible = false
+offset_right = 1504.0
+offset_bottom = 1080.0
+color = Color(0.0313726, 0.0313726, 0.0313726, 1)
+
+[node name="Cover" type="ColorRect" parent="Controls/Popup"]
+layout_mode = 0
+offset_left = 1504.0
+offset_top = 512.0
+offset_right = 1920.0
+offset_bottom = 1080.0
+color = Color(0.03125, 0.03125, 0.03125, 1)
+
+[node name="PopupLabel" type="Label" parent="Controls/Popup"]
+layout_mode = 0
+offset_left = 560.0
+offset_top = 200.0
+offset_right = 1360.0
+offset_bottom = 366.0
+theme_override_fonts/font = ExtResource("8_j74qm")
+theme_override_font_sizes/font_size = 200
+
+[node name="MenuButton" type="Button" parent="Controls/Popup"]
+layout_mode = 0
+offset_left = 512.0
+offset_top = 640.0
+offset_right = 860.0
+offset_bottom = 762.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(0, 1, 0, 1)
+theme_override_fonts/font = ExtResource("8_j74qm")
+theme_override_font_sizes/font_size = 120
+theme_override_styles/normal = SubResource("StyleBoxFlat_okr2d")
+theme_override_styles/hover = SubResource("StyleBoxFlat_ca17q")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_lx12g")
+text = "KEY_MENU"
+
+[node name="PlayButton" type="Button" parent="Controls/Popup"]
+layout_mode = 0
+offset_left = 1060.0
+offset_top = 640.0
+offset_right = 1408.0
+offset_bottom = 762.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(0, 1, 0, 1)
+theme_override_fonts/font = ExtResource("8_j74qm")
+theme_override_font_sizes/font_size = 120
+theme_override_styles/normal = SubResource("StyleBoxFlat_okr2d")
+theme_override_styles/hover = SubResource("StyleBoxFlat_ca17q")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_lx12g")
+text = "KEY_START"
+
+[node name="LeftCell" type="ProgressBar" parent="."]
+offset_left = 608.0
+offset_top = 568.0
+offset_right = 840.0
+offset_bottom = 672.0
+theme_override_styles/background = SubResource("StyleBoxFlat_rwkii")
+show_percentage = false
+
+[node name="LeftLabel" type="Label" parent="LeftCell"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 224.0
+offset_bottom = 96.0
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+theme_override_fonts/font = ExtResource("8_j74qm")
+theme_override_font_sizes/font_size = 19
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+
+[node name="CenterCell" type="ProgressBar" parent="."]
+offset_left = 844.0
+offset_top = 568.0
+offset_right = 1076.0
+offset_bottom = 672.0
+theme_override_styles/background = SubResource("StyleBoxFlat_rwkii")
+theme_override_styles/fill = SubResource("StyleBoxFlat_htoay")
+fill_mode = 3
+show_percentage = false
+
+[node name="CenterLabel" type="Label" parent="CenterCell"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 224.0
+offset_bottom = 96.0
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+theme_override_fonts/font = ExtResource("8_j74qm")
+theme_override_font_sizes/font_size = 19
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="ArmedCell" type="ProgressBar" parent="."]
+offset_left = 844.0
+offset_top = 460.0
+offset_right = 1076.0
+offset_bottom = 564.0
+theme_override_styles/background = SubResource("StyleBoxFlat_uq4gb")
+theme_override_styles/fill = SubResource("StyleBoxFlat_hl77r")
+fill_mode = 3
+show_percentage = false
+
+[node name="ArmedLabel" type="Label" parent="ArmedCell"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 224.0
+offset_bottom = 96.0
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+theme_override_fonts/font = ExtResource("8_j74qm")
+theme_override_font_sizes/font_size = 19
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="RightCell" type="ProgressBar" parent="."]
+offset_left = 1080.0
+offset_top = 568.0
+offset_right = 1312.0
+offset_bottom = 672.0
+theme_override_styles/background = SubResource("StyleBoxFlat_rwkii")
+show_percentage = false
+
+[node name="RightLabel" type="Label" parent="RightCell"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 224.0
+offset_bottom = 96.0
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+theme_override_fonts/font = ExtResource("8_j74qm")
+theme_override_font_sizes/font_size = 19
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+
+[node name="Tip" type="Polygon2D" parent="."]
+position = Vector2(939, 441)
+scale = Vector2(0.656251, 0.666669)
+color = Color(0, 1, 0, 1)
+polygon = PackedVector2Array(32, 0, 64, 32, 32, 36, 0, 32)
+
+[node name="Laser" type="ProgressBar" parent="Tip"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 27.0
+offset_top = -225.0
+offset_right = 37.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_q1vcx")
+theme_override_styles/fill = SubResource("StyleBoxFlat_expkl")
+step = 1.0
+fill_mode = 3
+show_percentage = false
+
+[node name="ClickSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_05ogg")
+mix_target = 2
+
+[node name="CDSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_mpicl")
+pitch_scale = 2.0
+mix_target = 2
+
+[node name="AlarmSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_ugq7s")
+mix_target = 2
+
+[node name="DazedSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11_gdmah")
+volume_db = -5.0
+mix_target = 2
+
+[node name="LoadResponse" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("12_oxuin")
+mix_target = 2
+
+[node name="AttackSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("13_ko1x0")
+mix_target = 2
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("14_hywa5")
+volume_db = -20.0
+
+[node name="LostSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("19_bkulf")
+
+[node name="WinSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("20_4ol87")
+
+[connection signal="counterattack" from="." to="Monster" method="_on_counterattack"]
+[connection signal="timeout" from="Dazed" to="." method="_on_dazed_timeout"]
+[connection signal="monster_attack" from="Monster" to="." method="_on_monster_attack"]
+[connection signal="victory" from="Monster" to="." method="_on_victory"]
+[connection signal="gui_input" from="Terminal/LeftButton/Left" to="." method="_on_left_gui_input"]
+[connection signal="gui_input" from="Terminal/RightButton/Right" to="." method="_on_right_gui_input"]
+[connection signal="gui_input" from="Terminal/EnterButton/Enter" to="." method="_on_enter_gui_input"]
+[connection signal="gui_input" from="Terminal/AttackButton/Attack" to="." method="_on_attack_gui_input"]
+[connection signal="gui_input" from="Terminal/AttackButtonHidden/Attack" to="." method="_on_attack_gui_input"]
+[connection signal="pressed" from="Controls/Popup/MenuButton" to="." method="_on_menu_button_pressed"]
+[connection signal="pressed" from="Controls/Popup/PlayButton" to="." method="_on_play_button_pressed"]

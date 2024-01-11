@@ -1,0 +1,183 @@
+[gd_scene load_steps=23 format=3 uid="uid://c0u2n7qgm8lks"]
+
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_vfd2j"]
+[ext_resource type="Texture2D" uid="uid://uye01fbbpau2" path="res://assets/graphics/menu-logo.png" id="2_c58j8"]
+[ext_resource type="FontFile" uid="uid://c1onid02yugm0" path="res://assets/fonts/clacon2.ttf" id="2_qoupy"]
+[ext_resource type="AudioStream" uid="uid://d1fsal8te5ma3" path="res://assets/sounds/UI.ogg" id="3_ukhk1"]
+[ext_resource type="Texture2D" uid="uid://brdra1pfa1do1" path="res://assets/graphics/erasmus-logo.png" id="4_h0auo"]
+[ext_resource type="Texture2D" uid="uid://dr8jpg7i43xng" path="res://assets/graphics/flags/GBR.png" id="6_tv7l6"]
+[ext_resource type="Texture2D" uid="uid://iog5rvsub45c" path="res://assets/graphics/flags/GBR-b.png" id="7_7lmjg"]
+[ext_resource type="Texture2D" uid="uid://cij428l5l4a6n" path="res://assets/graphics/flags/ITA.png" id="7_nfgcr"]
+[ext_resource type="Texture2D" uid="uid://uaqoinognyek" path="res://assets/graphics/flags/ITA-b.png" id="9_agnks"]
+[ext_resource type="Texture2D" uid="uid://b0wlwhx2lpvrb" path="res://assets/graphics/flags/NED.png" id="10_khfqk"]
+[ext_resource type="Texture2D" uid="uid://c3t6dgn22t57t" path="res://assets/graphics/flags/SPA.png" id="10_t6n4y"]
+[ext_resource type="Texture2D" uid="uid://c4tqgxne6nv31" path="res://assets/graphics/flags/SPA-b.png" id="11_w70wt"]
+[ext_resource type="Texture2D" uid="uid://8nfhcgg7wgwl" path="res://assets/graphics/flags/BGR.png" id="12_7sjto"]
+[ext_resource type="Texture2D" uid="uid://bl7dmy8b22bst" path="res://assets/graphics/flags/BGR-b.png" id="13_tgl7q"]
+[ext_resource type="Texture2D" uid="uid://c3kjyo32yrsfx" path="res://assets/graphics/flags/NED-b.png" id="15_5kmpk"]
+[ext_resource type="Texture2D" uid="uid://chf538yd7wlb8" path="res://assets/graphics/flags/TUR.png" id="16_3j63y"]
+[ext_resource type="Texture2D" uid="uid://ghf550u14q1i" path="res://assets/graphics/flags/TUR-b.png" id="17_p4mqd"]
+[ext_resource type="Texture2D" uid="uid://dkmdnx6b70787" path="res://assets/graphics/flags/EST.png" id="18_0v2iv"]
+[ext_resource type="Texture2D" uid="uid://c8lcbxbfpyeeg" path="res://assets/graphics/flags/EST-b.png" id="19_tl8rx"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0378f"]
+content_margin_left = 24.0
+content_margin_top = 24.0
+content_margin_right = 24.0
+content_margin_bottom = 0.0
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8mr6o"]
+content_margin_left = 24.0
+content_margin_top = 32.0
+content_margin_right = 24.0
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 8
+border_color = Color(0, 1, 0, 1)
+expand_margin_bottom = 5.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v7ey2"]
+content_margin_left = 24.0
+content_margin_top = 24.0
+content_margin_right = 24.0
+bg_color = Color(0, 1, 0, 1)
+
+[node name="main" type="Node"]
+script = ExtResource("1_vfd2j")
+
+[node name="Background" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(1920, 1080)
+offset_right = 40.0
+offset_bottom = 40.0
+color = Color(0.0313726, 0.0313726, 0.0313726, 1)
+metadata/_edit_lock_ = true
+
+[node name="ButtonSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_ukhk1")
+mix_target = 2
+
+[node name="ErasmusLogo" type="Sprite2D" parent="."]
+position = Vector2(1704, 88)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("4_h0auo")
+
+[node name="MenuLogo" type="Sprite2D" parent="."]
+position = Vector2(916, 257)
+scale = Vector2(0.709783, 0.709783)
+texture = ExtResource("2_c58j8")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+offset_left = 666.0
+offset_top = 304.0
+offset_right = 1254.0
+offset_bottom = 904.0
+size_flags_horizontal = 4
+alignment = 1
+
+[node name="StartButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(0, 1, 0, 1)
+theme_override_fonts/font = ExtResource("2_qoupy")
+theme_override_font_sizes/font_size = 120
+theme_override_styles/normal = SubResource("StyleBoxFlat_0378f")
+theme_override_styles/hover = SubResource("StyleBoxFlat_8mr6o")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_v7ey2")
+text = "KEY_START"
+
+[node name="QuitButton" type="Button" parent="VBoxContainer"]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(0, 1, 0, 1)
+theme_override_fonts/font = ExtResource("2_qoupy")
+theme_override_font_sizes/font_size = 120
+theme_override_styles/normal = SubResource("StyleBoxFlat_0378f")
+theme_override_styles/hover = SubResource("StyleBoxFlat_8mr6o")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_v7ey2")
+text = "KEY_QUIT"
+
+[node name="GridContainer" type="GridContainer" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -541.0
+offset_top = 340.0
+offset_right = 1857.0
+offset_bottom = 536.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.45, 0.45)
+theme_override_constants/h_separation = 50
+columns = 7
+
+[node name="English" type="TextureButton" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture_normal = ExtResource("6_tv7l6")
+texture_focused = ExtResource("7_7lmjg")
+stretch_mode = 0
+
+[node name="Italian" type="TextureButton" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture_normal = ExtResource("7_nfgcr")
+texture_focused = ExtResource("9_agnks")
+stretch_mode = 0
+
+[node name="Spanish" type="TextureButton" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture_normal = ExtResource("10_t6n4y")
+texture_focused = ExtResource("11_w70wt")
+stretch_mode = 0
+
+[node name="Bulgarian" type="TextureButton" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture_normal = ExtResource("12_7sjto")
+texture_focused = ExtResource("13_tgl7q")
+stretch_mode = 0
+
+[node name="Dutch" type="TextureButton" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture_normal = ExtResource("10_khfqk")
+texture_focused = ExtResource("15_5kmpk")
+stretch_mode = 0
+
+[node name="Turkish" type="TextureButton" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture_normal = ExtResource("16_3j63y")
+texture_focused = ExtResource("17_p4mqd")
+stretch_mode = 0
+
+[node name="Estonian" type="TextureButton" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture_normal = ExtResource("18_0v2iv")
+texture_focused = ExtResource("19_tl8rx")
+stretch_mode = 0
+
+[connection signal="pressed" from="VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="pressed" from="GridContainer/English" to="." method="_on_english_pressed"]
+[connection signal="pressed" from="GridContainer/Italian" to="." method="_on_italian_pressed"]
+[connection signal="pressed" from="GridContainer/Spanish" to="." method="_on_spanish_pressed"]
+[connection signal="pressed" from="GridContainer/Bulgarian" to="." method="_on_bulgarian_pressed"]
+[connection signal="pressed" from="GridContainer/Dutch" to="." method="_on_dutch_pressed"]
+[connection signal="pressed" from="GridContainer/Turkish" to="." method="_on_turkish_pressed"]
+[connection signal="pressed" from="GridContainer/Estonian" to="." method="_on_estonian_pressed"]
